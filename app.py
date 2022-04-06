@@ -33,7 +33,7 @@ class TaskSchema(ma.Schema):
 tasksSchema = TaskSchema()  # Una sola tarea
 tasks_Schema = TaskSchema(many=True)  # todas las tareas
 
-@app.route('/tasks', methods=['Post'])
+@app.route('/api/tasks', methods=['Post'])
 def create_task():
   title = request.json['title']
   check = request.json['description']
@@ -45,18 +45,18 @@ def create_task():
 
   return tasks_Schema.jsonify(new_task)
 
-@app.route('/tasks', methods=['GET'])
+@app.route('/api/tasks', methods=['GET'])
 def get_tasks():
   all_tasks = Task.query.all()
   result = tasks_Schema.dump(all_tasks)
   return jsonify(result)
 
-@app.route('/tasks/<id>', methods=['GET'])
+@app.route('/api/tasks/<id>', methods=['GET'])
 def get_task(id):
   task = Task.query.get(id)
   return tasksSchema.jsonify(task)
 
-@app.route('/tasks/<id>', methods=['PUT'])
+@app.route('/api/tasks/<id>', methods=['PUT'])
 def update_task(id):
   task = Task.query.get(id)
 
@@ -70,7 +70,7 @@ def update_task(id):
 
   return tasks_Schema.jsonify(task)
 
-@app.route('/tasks/<id>', methods=['DELETE'])
+@app.route('/api/tasks/<id>', methods=['DELETE'])
 def delete_task(id):
   task = Task.query.get(id)
   db.session.delete(task)
@@ -80,7 +80,7 @@ def delete_task(id):
 
 @app.route('/', methods=['GET'])
 def index():
-    return jsonify({'message': 'Welcome to my API'})
+    return '<h1>Hola, bienvenido a mi API ToDO List<h1/>'
 
 if __name__ == '__main__':
     app.run(debug=True)
