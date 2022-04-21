@@ -33,6 +33,11 @@ class TaskSchema(ma.Schema):
 tasksSchema = TaskSchema()  # Una sola tarea
 tasks_Schema = TaskSchema(many=True)  # todas las tareas
 
+tasks = [{}]
+
+task = Task.query.all()
+print(recetas)
+
 @app.route('/api/tasks', methods=['Post'])
 def create_task():
   title = request.json['title']
